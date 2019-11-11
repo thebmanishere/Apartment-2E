@@ -18,7 +18,7 @@ public class ConsumablePickUp : Interactable
 
     void PickUp()
     {
-        Item item = new Item(gameObject.name, ITEM_AMOUNT);
+        Item item = new Item(gameObject.name, gameObject.tag,ITEM_AMOUNT);
 
         Inventory.AddItem(item);
         gameObject.SetActive(false);

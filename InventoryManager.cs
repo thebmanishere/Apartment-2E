@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.UI;
 
 
 
@@ -9,24 +10,59 @@ public class InventoryManager : MonoBehaviour
 {
 
     public Dictionary<int, Item> invItems;
-    public GameObject itemSlot;
-    
+    public GameObject[] itemPanel;
+    public GameObject InvGUI;
+    public GameObject Crosshair;
 
+    bool EnableInventory = false;
 
     private void Start()
     {
         invItems = new Dictionary<int, Item>();
+
+       
+        
     }
+
+    private void Update()
+    {
+        if (Input.GetButtonDown("Inventory"))
+        {
+            EnableInventory = !EnableInventory;
+        }
+
+        InvGUI.SetActive(EnableInventory);
+        Crosshair.SetActive(!EnableInventory);
+
+    }
+
+
 
     //item -> dictionary
     //When called, takes the index and name of item, and adds it to dictionary
+
     public void AddItem(Item item)
     {
-
         int index = GetIndexValue();
 
-        invItems.Add(index, item);
-        Debug.Log("Items: " + invItems.Count);
+        if(index != -1)
+        {
+            invItems.Add(index, item);
+
+            switch (item.GetItemTag())
+            {
+                case "Key":
+
+                    Sprite newSprite = Resources.Load<Sprite>("Sprites/key") as Sprite;
+
+                    if (!newSprite) { Debug.Log("sprite has not been loaded in!"); }
+
+                    itemPanel[index].transform.Find("ItemImage").GetComponent<Image>().overrideSprite = newSprite;
+                    break;
+            }
+
+            Debug.Log("Item added: " + item.GetItemName());
+        }
         
     }
     
@@ -34,7 +70,7 @@ public class InventoryManager : MonoBehaviour
     //Find free space in inventory
     public int GetIndexValue()
     {
-        for(int i = 0; i < invItems.Count; i++)
+        for(int i = 0; i <= invItems.Count; i++)
         {
             if (!invItems.ContainsKey(i))
             {
@@ -45,4 +81,17 @@ public class InventoryManager : MonoBehaviour
         return -1;
 
     }
+
+    public void RemoveItem(int index)
+    {
+        invItems.Remove(index);
+        itemPanel[index].transform.Find("ItemImage").GetComponent<Image>().overrideSprite = null;
+    }
+
+    public void MoveItemToSlot(int lastIndex, int newIndex)
+    {
+
+    }
+
+
 }

@@ -24,8 +24,7 @@ public class PlayerController : MonoBehaviour
 
     public bool allowMovement = false;
 
-
-
+    
     float h;
     float v;
     float mouse_y;
@@ -40,9 +39,7 @@ public class PlayerController : MonoBehaviour
         else
 
             Debug.Log("Could not find main camera");
-    }
-
-   
+    } 
 
     void Update()
     {
@@ -58,6 +55,7 @@ public class PlayerController : MonoBehaviour
 
         }
 
+      
         mouseLook.enabled = true;
 
 
@@ -103,7 +101,7 @@ public class PlayerController : MonoBehaviour
 
     }
 
-
+  
     void ControllerMovementAndRotation()
     {
 

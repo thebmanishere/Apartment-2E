@@ -6,24 +6,26 @@ using UnityEngine.Events;
 public class Item 
 {
 
-    private string name;
-    public string itemType;
-    public int itemAmount;
+    string name;
+    string itemType;
+    int itemAmount;
+    string itemTag;
 
-    public string Name
+    //assign image to this, so when added to inv you'd assign everything just to the transform
+
+   public string GetItemName()
     {
-        get { return Name; }
-
-        set { name = value; }
+        return name;
     }
 
-    public int ItemAmount
+    public int GetItemAmount()
     {
-        get { return ItemAmount; }
+       return itemAmount;
+    }
 
-        set { ItemAmount = value; }
-
-
+    public string GetItemTag()
+    {
+        return itemTag;
     }
 
     public Item()
@@ -32,9 +34,10 @@ public class Item
         itemAmount = 1;
     }
 
-    public Item(string n, int amount)
+    public Item(string n, string t,int amount)
     {
         name = n;
+        itemTag = t;
         itemAmount = amount;
     }
 
