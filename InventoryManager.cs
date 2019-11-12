@@ -3,13 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UnityEngine.UI;
-
+using UnityEngine.Events;
 
 
 public class InventoryManager : MonoBehaviour
 {
 
     public Dictionary<int, Item> invItems;
+
+    public UnityEvent OnInvChange = new UnityEvent();
+   
+
     public GameObject[] itemPanel;
     public GameObject InvGUI;
     public GameObject Crosshair;
@@ -19,6 +23,8 @@ public class InventoryManager : MonoBehaviour
     private void Start()
     {
         invItems = new Dictionary<int, Item>();
+        OnInvChange = new UnityEvent();
+
 
        
         
@@ -88,10 +94,6 @@ public class InventoryManager : MonoBehaviour
         itemPanel[index].transform.Find("ItemImage").GetComponent<Image>().overrideSprite = null;
     }
 
-    public void MoveItemToSlot(int lastIndex, int newIndex)
-    {
-
-    }
-
+    //possible to do: add more inventory function? 
 
 }
