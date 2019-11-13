@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class LockedObject : Interactable
 {
-    public bool KEY_AMOUNT;
-    public string KEY_NAME;
+    
+    public string[] ITEM_NAME;
+    //public GameObject Inventory;
+    public InventoryManager Inv;
 
     public override void Interact()
     {
@@ -22,18 +24,58 @@ public class LockedObject : Interactable
 
         if(checkForKeys())
         {
+            Debug.Log(gameObject.name + " has been unlocked.");
+
             return true;
+
         }
 
-        Debug.Log("Player has clicked on " + gameObject.name);
-
+        Debug.Log(gameObject.name + " is locked.");
         return false;
     }
 
     bool checkForKeys()
     {
-        //check inventory for items
-        //to do: figure out how inventory and this can communicate without direct reference 
+
+        //doesn't work with more than one key
+
+        if (ITEM_NAME.Length >= 1)
+        {
+            bool[] hasKey = new bool[ITEM_NAME.Length];
+
+
+
+            //set them all to true, and then if item isn't 
+            //found, set it to false
+
+            for (int h = 0; h < hasKey.Length; h++)
+            {
+                hasKey[h] = true;
+            }
+            
+
+            for (int i = 0; i <= ITEM_NAME.Length; i++)
+            {                
+                //check for each string
+                //running into array out of bounds error 
+
+                if (!Inv.SearchForItem(ITEM_NAME[i]))
+                {
+                    hasKey[i] = false;
+                }
+            }
+
+            for (int j = 0; j < hasKey.Length; j++)
+            {
+                if (hasKey[j] == true) return true;             
+            }
+        }
+       
+            //else if (Inv.SearchForItem(ITEM_NAME[0]))
+            //{
+            //    return true;
+            //}
+
 
         return false;
     }

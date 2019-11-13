@@ -94,6 +94,31 @@ public class InventoryManager : MonoBehaviour
         itemPanel[index].transform.Find("ItemImage").GetComponent<Image>().overrideSprite = null;
     }
 
+    public bool SearchForItem(string item_name)
+    {
+
+        //find the item name, how do i get that???
+
+        Item item = null;
+        string name = null;
+        Dictionary<int, Item> SearchedItems = new Dictionary<int, Item>();
+
+        foreach (KeyValuePair<int, Item> entry in invItems)
+        {
+            if(entry.Value.GetItemName() == item_name) //null ref error
+            {
+                item = entry.Value;
+                name = item.GetItemName();
+                //Debug.Log("Key has been found!");
+
+                return true;
+            }
+        }
+
+        return false;
+
+    }
+
     //possible to do: add more inventory function? 
 
 }
