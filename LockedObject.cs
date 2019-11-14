@@ -6,7 +6,6 @@ public class LockedObject : Interactable
 {
     
     public string[] ITEM_NAME;
-    //public GameObject Inventory;
     public InventoryManager Inv;
 
     public override void Interact()
@@ -22,7 +21,7 @@ public class LockedObject : Interactable
 
         //if true, unlock object
 
-        if(checkForKeys())
+        if (checkForKeys())
         {
             Debug.Log(gameObject.name + " has been unlocked.");
 
@@ -37,47 +36,44 @@ public class LockedObject : Interactable
     bool checkForKeys()
     {
 
-        //doesn't work with more than one key
+        bool[] hasKey = new bool[ITEM_NAME.Length];
+       
+        for (int h = 0; h < hasKey.Length - 1; h++)
+        {
+            hasKey[h] = true;
+        }
 
         if (ITEM_NAME.Length >= 1)
         {
-            bool[] hasKey = new bool[ITEM_NAME.Length];
+          
+            for (int i = 0; i < ITEM_NAME.Length - 1; i++)
+            {               
+                string name = Inv.SearchForItem(ITEM_NAME[i]);
 
-
-
-            //set them all to true, and then if item isn't 
-            //found, set it to false
-
-            for (int h = 0; h < hasKey.Length; h++)
-            {
-                hasKey[h] = true;
-            }
-            
-
-            for (int i = 0; i <= ITEM_NAME.Length; i++)
-            {                
-                //check for each string
-                //running into array out of bounds error 
-
-                if (!Inv.SearchForItem(ITEM_NAME[i]))
+                if (name != ITEM_NAME[i])
                 {
                     hasKey[i] = false;
-                }
-            }
-
-            for (int j = 0; j < hasKey.Length; j++)
-            {
-                if (hasKey[j] == true) return true;             
+                    Debug.Log(ITEM_NAME[i] + " has not been found in inventory.");
+                }               
             }
         }
+
+        else if(ITEM_NAME.Length < 1)
+        {
+            if (name != ITEM_NAME[0])
+            {
+                hasKey[0] = false;
+            }
+        }
+
+        for (int j = 0; j < hasKey.Length - 1; j++)
+        {
+            if (!hasKey[j]) return false;
+        }
+
+
+        return true;
        
-            //else if (Inv.SearchForItem(ITEM_NAME[0]))
-            //{
-            //    return true;
-            //}
-
-
-        return false;
     }
 
 

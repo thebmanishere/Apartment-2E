@@ -1,4 +1,15 @@
-﻿using System.Collections;
+﻿/*
+ * TO DO:
+ * ------
+ * 
+ * -> Remove consumable items when used in game 
+ 
+ */
+
+
+
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
@@ -24,10 +35,7 @@ public class InventoryManager : MonoBehaviour
     {
         invItems = new Dictionary<int, Item>();
         OnInvChange = new UnityEvent();
-
-
-       
-        
+    
     }
 
     private void Update()
@@ -88,13 +96,16 @@ public class InventoryManager : MonoBehaviour
 
     }
 
+    
+
     public void RemoveItem(int index)
     {
+        //invItems.Remove(index);
         invItems.Remove(index);
         itemPanel[index].transform.Find("ItemImage").GetComponent<Image>().overrideSprite = null;
     }
 
-    public bool SearchForItem(string item_name)
+    public string SearchForItem(string item_name)
     {
 
         //find the item name, how do i get that???
@@ -111,11 +122,11 @@ public class InventoryManager : MonoBehaviour
                 name = item.GetItemName();
                 //Debug.Log("Key has been found!");
 
-                return true;
+                return name;
             }
         }
 
-        return false;
+        return null;
 
     }
 
