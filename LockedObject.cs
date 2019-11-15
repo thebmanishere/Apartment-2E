@@ -1,6 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+
 
 public class LockedObject : Interactable
 {
@@ -19,11 +18,16 @@ public class LockedObject : Interactable
     bool UnlockState()
     {
 
-        //if true, unlock object
-
         if (checkForKeys())
         {
             Debug.Log(gameObject.name + " has been unlocked.");
+
+            for (int i = 0; i < ITEM_NAME.Length; i++)
+            {
+                Inv.RemoveItem(i);
+                //issues might arise if keys arent the first in the 
+                //index of inv dictionary
+            }
 
             return true;
 
@@ -48,7 +52,7 @@ public class LockedObject : Interactable
           
             for (int i = 0; i < ITEM_NAME.Length - 1; i++)
             {               
-                string name = Inv.SearchForItem(ITEM_NAME[i]);
+                string name = Inv.FindItem(ITEM_NAME[i]);
 
                 if (name != ITEM_NAME[i])
                 {
