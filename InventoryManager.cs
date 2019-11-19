@@ -114,12 +114,30 @@ public class InventoryManager : MonoBehaviour
         itemPanel[index].transform.Find("ItemImage").GetComponent<Image>().overrideSprite = null;
     }
 
+    public int FindItemIndex(string item_name)
+    {
+        Item item = null;
 
-    public string FindItem(string item_name)
+        Dictionary<int, Item> SearchedItems = new Dictionary<int, Item>();
+
+        foreach (KeyValuePair<int, Item> entry in invItems)
+        {
+            if (entry.Value.GetItemName() == item_name) //null ref error
+            {
+                return entry.Key;
+            }
+        }
+
+        return 0;
+    }
+
+    public string FindItemName(string item_name)
     {
 
         Item item = null;
         string name = null;
+        int index = 0;
+
         Dictionary<int, Item> SearchedItems = new Dictionary<int, Item>();
 
         foreach (KeyValuePair<int, Item> entry in invItems)
@@ -127,6 +145,7 @@ public class InventoryManager : MonoBehaviour
             if (entry.Value.GetItemName() == item_name) //null ref error
             {
                 item = entry.Value;
+                index = entry.Key;
                 name = item.GetItemName();
                 //Debug.Log("Key has been found!");
 

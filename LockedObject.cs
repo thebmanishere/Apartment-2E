@@ -1,5 +1,17 @@
 ﻿using UnityEngine;
 
+/**
+ 
+     Possible Issues to look out for: 
+
+    
+    - issues might arise if keys arent the first in the index of inv dictionary (when trying to remove items)
+     
+     
+     
+     
+     
+     */
 
 public class LockedObject : Interactable
 {
@@ -24,10 +36,15 @@ public class LockedObject : Interactable
 
             for (int i = 0; i < ITEM_NAME.Length; i++)
             {
-                Inv.RemoveItem(i);
-                //issues might arise if keys arent the first in the 
-                //index of inv dictionary
+                //int index = Inv.FindItem(ITEM_NAME[i]);
+
+                int index = Inv.FindItemIndex(ITEM_NAME[i]);
+
+                Inv.RemoveItem(index);
+
             }
+
+            GetComponent<UnlockObject>().UnlockObj();
 
             return true;
 
@@ -52,7 +69,7 @@ public class LockedObject : Interactable
           
             for (int i = 0; i < ITEM_NAME.Length - 1; i++)
             {               
-                string name = Inv.FindItem(ITEM_NAME[i]);
+                string name = Inv.FindItemName(ITEM_NAME[i]);
 
                 if (name != ITEM_NAME[i])
                 {
